@@ -1,5 +1,3 @@
-sum = 0
-
 file = open("./day 3/part_numbers.txt", "r")
 
 def build_matrix(file):
@@ -40,19 +38,43 @@ def build_num(row, column, matrix):
     temp_column = column
 
     #check in front
-    while matrix[row][temp_column - 1].isdigit():
-        temp_column -= 1
-        num.insert(matrix[row][temp_column])
+    while (temp_column - 1) >= 0:
+        if matrix[row][temp_column - 1].isdigit():
+            temp_column -= 1
+            num.insert(0, matrix[row][temp_column])
+        else:
+            break
+
+        
 
     temp_column = column
 
     #check behind
-    while matrix[row][temp_column + 1].isdigit():
-        temp_column += 1
-        num.append(matrix[row][temp_column])
+    while (temp_column + 1) <= (len(matrix[row]) - 1):
+        if matrix[row][temp_column + 1].isdigit():
+            temp_column += 1
+            num.append(matrix[row][temp_column])
+        else:
+            break
 
     return "".join(num)
     
+#main logic
+sum = 0
+syms = "@#$%&*=+-/"
+matrix = build_matrix(file)
+print(matrix)
 
+for row in matrix:
+    count = 0
+    for column in row:
+        row_index = matrix.index(row)
+        column_index = count
+        if matrix[row_index][column_index] in syms:
+            num_list = check_part_number(row_index, column_index, matrix)
+            for num in num_list:
+                sum += int(num)
 
-print(build_matrix(file))
+        count += 1
+
+print(sum)
