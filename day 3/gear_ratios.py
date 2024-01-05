@@ -59,7 +59,7 @@ def build_num(row, column, matrix):
 
     return "".join(num)
     
-#main logic
+#part1 logic
 sum = 0
 syms = "@#$%&*=+-/"
 matrix = build_matrix(file)
@@ -78,3 +78,21 @@ for row in matrix:
         count += 1
 
 print(sum)
+
+#part2 logic
+p2_sum = 0
+p2_syms = "*"
+for row in matrix:
+    count = 0
+    for column in row:
+        row_index = matrix.index(row)
+        column_index = count
+        if matrix[row_index][column_index] in p2_syms:
+            num_list = check_part_number(row_index, column_index, matrix)
+            if len(num_list) == 2:
+                p2_sum += int(num_list[0]) * int(num_list[1])
+        
+        count += 1
+
+print(p2_sum)
+
